@@ -1,2 +1,2 @@
-mkdir -p plugins
-mv gaius-server-plugin-0.3.3.jar plugins/
+#!/bin/bash
+nohup java -jar gaius-server-plugin-0.3.3.jar --port 8081 > gaius.log 2>&1 &
