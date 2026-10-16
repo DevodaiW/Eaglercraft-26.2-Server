@@ -1,3 +1,4 @@
 #!/bin/bash
-java -jar BungeeCord.jar &
+cd proxy-app/build
+node index.js &
 exec "$@"
