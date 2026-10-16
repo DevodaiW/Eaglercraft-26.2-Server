@@ -1,2 +1,57 @@
-#!/bin/bash
-nohup java -jar gaius-server-plugin-0.3.3.jar --port 8081 > gaius.log 2>&1 &
+mkdir -p plugins
+mkdir -p build/src/com/proxy/dynamic
+mkdir -p build/classes
+
+# 1. Generate the Java Code
+cat << 'EOF' > build/src/com/proxy/dynamic/AnyServer.java
+package com.proxy.dynamic;
+import net.md_5.bungee.api.CommandSender;
+import net.md_5.bungee.api.chat.TextComponent;
+import net.md_5.bungee.api.config.ServerInfo;
+import net.md_5.bungee.api.connection.ProxiedPlayer;
+import net.md_5.bungee.api.plugin.Command;
+import net.md_5.bungee.api.plugin.Plugin;
+import java.net.InetSocketAddress;
+
+public class AnyServer extends Plugin {
+    @Override
+    public void onEnable() {
+        getProxy().getPluginManager().registerCommand(this, new Command("join") {
+            @Override
+            public void execute(CommandSender sender, String[] args) {
+                if (!(sender instanceof ProxiedPlayer)) return;
+                ProxiedPlayer player = (ProxiedPlayer) sender;
+                if (args.length == 0) {
+                    player.sendMessage(new TextComponent("§cUsage: /join <ip>[:port]"));
+                    return;
+                }
+                String[] parts = args[0].split(":");
+                String ip = parts[0];
+                int port = parts.length > 1 ? Integer.parseInt(parts[1]) : 25565;
+                String id = "dyn_" + ip.replace(".", "_") + "_" + port;
+                ServerInfo info = getProxy().getServerInfo(id);
+                if (info == null) {
+                    info = getProxy().constructServerInfo(id, new InetSocketAddress(ip, port), "Dynamic IP", false);
+                }
+                player.sendMessage(new TextComponent("§aRouting proxy to " + ip + ":" + port + "..."));
+                player.connect(info);
+            }
+        });
+    }
+}
+EOF
+
+# 2. Generate Plugin Manifest
+cat << 'EOF' > build/classes/plugin.yml
+name: AnyServer
+version: 1.0
+main: com.proxy.dynamic.AnyServer
+author: AutoBuilder
+EOF
+
+# 3. Compile and Package
+javac -cp BungeeCord.jar -d build/classes build/src/com/proxy/dynamic/AnyServer.java
+cd build/classes
+jar cf ../../plugins/AnyServer.jar *
+cd ../../
+rm -rf build
