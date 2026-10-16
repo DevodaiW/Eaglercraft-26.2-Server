@@ -1,10 +1,10 @@
 c.ServerProxy.servers = {
     'eagler-proxy': {
-        'command': ['java', '-jar', 'proxy.jar'], # Replace with your specific proxy executable jar
+        'command': ['java', '-jar', 'gaius-server-plugin-0.3.3.jar'],
         'port': 8080,
         'timeout': 60,
         'launcher_entry': {
-            'title': 'Eagler Proxy',
+            'title': 'Eaglercraft Server Bridge',
         }
     }
 }
