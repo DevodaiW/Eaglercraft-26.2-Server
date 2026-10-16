@@ -4,9 +4,10 @@
 git clone https://github.com/WorldEditAxe/eaglerproxy.git proxy-app
 cd proxy-app
 
-# 2. Install dependencies locally (including TypeScript)
+# 2. Install dependencies locally
 npm install
-npm install typescript
+# Lock TypeScript to version 5 to prevent the moduleResolution error
+npm install typescript@5
 
 # 3. Create the configuration file
 cat << 'EOF' > config.ts
@@ -26,5 +27,5 @@ export const config = {
 };
 EOF
 
-# 4. Compile the code using the local TypeScript installation
+# 4. Compile the code using the compatible TypeScript installation
 ./node_modules/.bin/tsc
