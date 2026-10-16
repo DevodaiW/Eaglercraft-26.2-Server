@@ -1,0 +1,2 @@
+#!/bin/bash
+nohup java -jar gaius-bridge-26.3.jar --port 8081 > gaius.log 2>&1 &
