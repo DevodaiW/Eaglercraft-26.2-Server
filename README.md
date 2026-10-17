@@ -1,18 +1,23 @@
 # Eaglercraft Dynamic Relay on MyBinder
 
-This is a dynamic EaglerProxy relay. You can use it to connect to any standard Minecraft server via your browser.
+A zero-cost, high-speed EaglerProxy relay running on MyBinder (Google Kubernetes Engine) with low latency.
 
-## 🚀 How to Host
-[**Launch on MyBinder**](https://mybinder.org/v2/gh/DevodaiW/Eaglercraft-26.3-Server-on-mybinder.org/HEAD)
+## How to Launch
 
-## 🔌 How to Connect
-Wait for your Binder instance to load, then look at the URL in your browser:
-`https://hub.bids.mybinder.org/user/devodaiw-eagler-on-mybinder.org-fo92ja17/lab`
+1. Click to launch on MyBinder: `https://mybinder.org/v2/gh/<YOUR_GITHUB_USERNAME>/<YOUR_REPO_NAME>/HEAD`
+2. Wait for the JupyterLab workspace interface to load.
 
-Extract your workspace ID (e.g., `fo92ja17`), and build your WebSocket link by passing the target server's IP and port at the end.
+## How to Connect
 
-**Format:**
-`ws://hub.bids.mybinder.org/user/devodaiw-eagler-on-mybinder.org-fo92ja17/proxy/8081/?ip=<SERVER_IP>&port=<PORT>`
+1. Look at your browser address bar:
+   `https://hub.bids.mybinder.org/user/<workspace-id>/lab`
+2. Copy your workspace ID string (e.g., `devodaiw-eagler-on-mybinder-org-fo92ja17`).
+3. Construct your connection URL using `wss://` and keeping the trailing slash after `8081`:
+   `wss://hub.bids.mybinder.org/user/<workspace-id>/proxy/8081/`
 
-**Example (Connecting to Hypixel):**
-`ws://hub.bids.mybinder.org/user/devodaiw-eagler-on-mybinder.org-fo92ja17/proxy/8081/?ip=mc.hypixel.net&port=25565`
+## How to Play
+
+1. Open your Eaglercraft client.
+2. Add a new server with your `wss://` link.
+3. Join the server. You will enter the proxy lobby.
+4. Type `/join <SERVER_IP>` in chat (e.g., `/join crackedpvp.club` or `/join mc.hypixel.net`) to bridge to any server on demand.
