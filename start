@@ -1,4 +1,5 @@
 #!/bin/bash
 cd proxy-app
 node build/index.js &
+
 exec "$@"
