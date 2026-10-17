@@ -1,14 +1,14 @@
 #!/bin/bash
 set -e
 
-# Clone EaglerProxy repo directly
+# Clone repository
 git clone https://github.com/WorldEditAxe/eaglerproxy.git proxy-app
 cd proxy-app
 
 # Install dependencies
 npm install
 
-# Override tsconfig.json so TypeScript ignores Node version/type mismatch errors and forces clean build output
+# Force TypeScript to ignore type checking errors on legacy Buffer code
 cat << 'EOF' > tsconfig.json
 {
   "compilerOptions": {
@@ -28,7 +28,7 @@ cat << 'EOF' > tsconfig.json
 }
 EOF
 
-# Create EagPaaS dynamic config (allows connecting to ANY server on demand)
+# Write EagPaaS config for dynamic server routing
 cat << 'EOF' > config.ts
 export const config = {
   bindHost: "0.0.0.0",
@@ -46,5 +46,5 @@ export const config = {
 };
 EOF
 
-# Build project into build/
+# Compile TypeScript to JavaScript
 ./node_modules/.bin/tsc || true
