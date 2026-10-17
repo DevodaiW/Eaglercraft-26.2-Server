@@ -1,4 +1,0 @@
-#!/bin/bash
-cd proxy-app
-./node_modules/.bin/tsx src/index.ts &
-exec "$@"
