@@ -1,5 +1,5 @@
 #!/bin/bash
 cd proxy-app
-node build/src/index.js &
+./node_modules/.bin/tsx src/index.ts &
 
 exec "$@"
