@@ -1,9 +1,15 @@
 #!/bin/bash
+set -e
+
+# Clone repository
 git clone https://github.com/WorldEditAxe/eaglerproxy.git proxy-app
 cd proxy-app
+
+# Install dependencies with compatible TypeScript and Node typings
 npm install
 npm install typescript@4.8.4 @types/node@16 --save-dev
 
+# Generate configuration
 cat << 'EOF' > config.ts
 export const config = {
   bindHost: "0.0.0.0",
@@ -21,4 +27,5 @@ export const config = {
 };
 EOF
 
+# Compile TypeScript into build/
 ./node_modules/.bin/tsc
