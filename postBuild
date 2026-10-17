@@ -1,21 +1,39 @@
 #!/bin/bash
 set -e
 
-# Clone repository
-git clone https://github.com/WorldEditAxe/eaglerproxy.git proxy-app
+# Clone repository into proxy-app if not already present
+if [ ! -d "proxy-app" ]; then
+  git clone https://github.com/WorldEditAxe/eaglerproxy.git proxy-app
+fi
+
 cd proxy-app
 
-# Install dependencies and tsx
+# Install dependencies and local TypeScript compiler
 npm install
-npm install tsx --save-dev
+npm install typescript@4.8.4 --save-dev
 
-# Patch PluginManager to allow .ts entry points
-sed -i 's/!metadata.entry_point.endsWith(".js")/false/g' src/proxy/pluginLoader/PluginManager.ts
+# Write tsconfig.json that forces JavaScript output into build/ regardless of type warnings
+cat << 'EOF' > tsconfig.json
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "outDir": "./build",
+    "rootDir": "./src",
+    "strict": false,
+    "skipLibCheck": true,
+    "noEmitOnError": false,
+    "esModuleInterop": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "lib": ["ES2022", "DOM"]
+  },
+  "include": ["src/**/*"]
+}
+EOF
 
-# Set plugin entry point to index.ts
-sed -i 's/"entry_point": "index.js"/"entry_point": "index.ts"/g' src/plugins/EagProxyAAS/metadata.json
-
-# Create complete config.ts in root and src/
+# Write full EagPaaS configuration file with default and named exports
 cat << 'EOF' > config.ts
 export const config = {
   bindHost: "0.0.0.0",
@@ -46,6 +64,12 @@ export const config = {
     useNatives: true
   }
 };
+
+export default config;
 EOF
 
+# Copy config to src/ directory
 cp config.ts src/config.ts
+
+# Compile TypeScript into build/ directory
+./node_modules/.bin/tsc || true
