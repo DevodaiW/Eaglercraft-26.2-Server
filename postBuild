@@ -1,41 +1,22 @@
 #!/bin/bash
 set -e
 
-# Clone repository into proxy-app if not already present
 if [ ! -d "proxy-app" ]; then
   git clone https://github.com/WorldEditAxe/eaglerproxy.git proxy-app
 fi
 
 cd proxy-app
 
-# Install dependencies and local TypeScript compiler
 npm install
-npm install typescript@4.8.4 --save-dev
+npm install tsx --save-dev
 
-# Write tsconfig.json that forces JavaScript output into build/ regardless of type warnings
-cat << 'EOF' > tsconfig.json
-{
-  "compilerOptions": {
-    "target": "ES2022",
-    "module": "NodeNext",
-    "moduleResolution": "NodeNext",
-    "outDir": "./build",
-    "rootDir": "./src",
-    "strict": false,
-    "skipLibCheck": true,
-    "noEmitOnError": false,
-    "esModuleInterop": true,
-    "experimentalDecorators": true,
-    "emitDecoratorMetadata": true,
-    "lib": ["ES2022", "DOM"]
-  },
-  "include": ["src/**/*"]
-}
-EOF
+# Patch PluginManager for TypeScript entry points
+sed -i 's/!metadata.entry_point.endsWith(".js")/false/g' src/proxy/pluginLoader/PluginManager.ts
+sed -i 's/"entry_point": "index.js"/"entry_point": "index.ts"/g' src/plugins/EagProxyAAS/metadata.json
 
-# Write full EagPaaS configuration file with default and named exports
+# Write universal dynamic configuration
 cat << 'EOF' > config.ts
-export const config = {
+const CONFIG = {
   bindHost: "0.0.0.0",
   bindPort: 8081,
   maxConcurrentClients: 200,
@@ -48,7 +29,7 @@ export const config = {
     port: 25565
   },
   motd: {
-    l1: "EaglerProxy",
+    l1: "EaglerProxy Dynamic",
     l2: "Powered by EagPaaS"
   },
   skins: {
@@ -65,11 +46,19 @@ export const config = {
   }
 };
 
-export default config;
+export const bindHost = CONFIG.bindHost;
+export const bindPort = CONFIG.bindPort;
+export const maxConcurrentClients = CONFIG.maxConcurrentClients;
+export const client = CONFIG.client;
+export const server = CONFIG.server;
+export const motd = CONFIG.motd;
+export const skins = CONFIG.skins;
+export const adapter = CONFIG.adapter;
+export const config = CONFIG;
+export const CONFIG = CONFIG;
+export default CONFIG;
 EOF
 
-# Copy config to src/ directory
+cp config.ts CONFIG.ts
 cp config.ts src/config.ts
-
-# Compile TypeScript into build/ directory
-./node_modules/.bin/tsc || true
+cp config.ts src/CONFIG.ts
