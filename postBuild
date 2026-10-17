@@ -1,32 +1,24 @@
 #!/bin/bash
-
-# 1. Download EaglerProxy
 git clone https://github.com/WorldEditAxe/eaglerproxy.git proxy-app
 cd proxy-app
-
-# 2. Install dependencies
 npm install
+npm install typescript@4.8.4 @types/node@16 --save-dev
 
-# 3. Downgrade TypeScript and Node typings to match the original codebase
-npm install typescript@4.8.4 @types/node@16 --no-save
-
-# 4. Create the configuration file
 cat << 'EOF' > config.ts
 export const config = {
-    bindHost: "0.0.0.0",
-    bindPort: 8081,
-    maxConcurrentClients: 200,
-    client: {
-        version: "1.8.8",
-        brand: "EaglerProxy Relay"
-    },
-    adapter: {
-        name: "EaglerProxy",
-        version: "1.0",
-        useNatives: true
-    }
+  bindHost: "0.0.0.0",
+  bindPort: 8081,
+  maxConcurrentClients: 200,
+  client: {
+    version: "1.8.8",
+    brand: "EaglerProxy Relay"
+  },
+  adapter: {
+    name: "EaglerProxy",
+    version: "1.0",
+    useNatives: true
+  }
 };
 EOF
 
-# 5. Compile the code using the older, compatible TypeScript installation
 ./node_modules/.bin/tsc
