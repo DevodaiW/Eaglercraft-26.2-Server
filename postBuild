@@ -5,17 +5,17 @@ set -e
 git clone https://github.com/WorldEditAxe/eaglerproxy.git proxy-app
 cd proxy-app
 
-# Install dependencies and explicitly install TypeScript locally
+# Install dependencies and local TypeScript
 npm install
 npm install typescript@4.8.4 --save-dev
 
-# Configure TypeScript build settings
+# Override tsconfig.json to force JavaScript emission
 cat << 'EOF' > tsconfig.json
 {
   "compilerOptions": {
     "target": "ES2022",
-    "module": "NodeNext",
-    "moduleResolution": "NodeNext",
+    "module": "CommonJS",
+    "moduleResolution": "node",
     "outDir": "./build",
     "rootDir": "./src",
     "strict": false,
@@ -29,7 +29,7 @@ cat << 'EOF' > tsconfig.json
 }
 EOF
 
-# Write EagPaaS dynamic routing config
+# Generate EagPaaS dynamic routing config
 cat << 'EOF' > config.ts
 export const config = {
   bindHost: "0.0.0.0",
@@ -47,5 +47,5 @@ export const config = {
 };
 EOF
 
-# Compile source files locally
-./node_modules/.bin/tsc || true
+# Compile source code ignoring type errors
+./node_modules/.bin/tsc --noEmitOnError false || true
