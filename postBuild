@@ -5,11 +5,17 @@ set -e
 git clone https://github.com/WorldEditAxe/eaglerproxy.git proxy-app
 cd proxy-app
 
-# Install dependencies and tsx execution runner
+# Install dependencies and tsx
 npm install
 npm install tsx --save-dev
 
-# Write EagPaaS dynamic routing config
+# Patch PluginManager to allow .ts entry points
+sed -i 's/!metadata.entry_point.endsWith(".js")/false/g' src/proxy/pluginLoader/PluginManager.ts
+
+# Set plugin entry point to index.ts
+sed -i 's/"entry_point": "index.js"/"entry_point": "index.ts"/g' src/plugins/EagProxyAAS/metadata.json
+
+# Create complete config.ts in root and src/
 cat << 'EOF' > config.ts
 export const config = {
   bindHost: "0.0.0.0",
@@ -19,6 +25,21 @@ export const config = {
     version: "1.8.8",
     brand: "EaglerProxy Relay"
   },
+  server: {
+    host: "127.0.0.1",
+    port: 25565
+  },
+  motd: {
+    l1: "EaglerProxy",
+    l2: "Powered by EagPaaS"
+  },
+  skins: {
+    skinUrl: "https://textures.minecraft.net/texture/",
+    cache: {
+      enabled: true,
+      maxAge: 86400000
+    }
+  },
   adapter: {
     name: "EagPaaS",
     version: "1.0",
@@ -26,3 +47,5 @@ export const config = {
   }
 };
 EOF
+
+cp config.ts src/config.ts
