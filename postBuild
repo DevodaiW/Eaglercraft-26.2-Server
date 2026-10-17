@@ -1,15 +1,15 @@
 #!/bin/bash
 set -e
 
-# Clone repository
+# Clone EaglerProxy repo
 git clone https://github.com/WorldEditAxe/eaglerproxy.git proxy-app
 cd proxy-app
 
-# Install dependencies with compatible TypeScript and Node typings
+# Install dependencies with legacy Node typings & TypeScript 4.8.4
 npm install
 npm install typescript@4.8.4 @types/node@16 --save-dev
 
-# Generate configuration
+# Generate EagPaaS dynamic configuration for ALL servers
 cat << 'EOF' > config.ts
 export const config = {
   bindHost: "0.0.0.0",
@@ -20,12 +20,12 @@ export const config = {
     brand: "EaglerProxy Relay"
   },
   adapter: {
-    name: "EaglerProxy",
+    name: "EagPaaS",
     version: "1.0",
     useNatives: true
   }
 };
 EOF
 
-# Compile TypeScript into build/
+# Compile TypeScript
 ./node_modules/.bin/tsc
