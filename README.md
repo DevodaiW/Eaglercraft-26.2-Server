@@ -1,23 +1,11 @@
 # Eaglercraft Dynamic Relay on MyBinder
 
-A zero-cost, high-speed EaglerProxy relay running on MyBinder (Google Kubernetes Engine) with low latency.
+## Setup Instructions
 
-## How to Launch
-
-1. Click to launch on MyBinder: [https://mybinder.org/v2/gh/DevodaiW/Eaglercraft-26.2-Server-on-mybinder.org/HEAD](https://mybinder.org/v2/gh/DevodaiW/Eaglercraft-26.2-Server-on-mybinder.org/HEAD)
+1. Click to launch on MyBinder: [`https://mybinder.org/v2/gh/DevodaiW/Eaglercraft-26.2-Server-on-mybinder.org/HEAD`](https://mybinder.org/v2/gh/DevodaiW/Eaglercraft-26.2-Server-on-mybinder.org/HEAD)
 2. Wait for the JupyterLab workspace interface to load.
-
-## How to Connect
-
-1. Look at your browser address bar:
-   `https://<url>/lab`
-2. Copy your workspace ID string (e.g., `hub.gesis.mybinder.org/user/devodaiw-eagler-on-mybinder.org-p8xp4u2v`).
-3. Construct your connection URL using `wss://` and keeping the trailing slash and put a question mark after `8081`:
-   `wss://<url>/proxy/8081/`
-
-## How to Play
-
-1. Open your Eaglercraft client.
-2. Add a new server with your `wss://` link.
-3. Join the server. You will enter the proxy lobby.
-4. Type `/join <SERVER_IP>` in chat (e.g., `/join crackedpvp.club` or `/join mc.hypixel.net`) to bridge to any server on demand.
+3. In JupyterLab, open the **Terminal**.
+4. You need to provide your Ngrok AuthToken before starting the server. Run the following command and follow the prompt:
+   `bash run_server.sh`
+5. Enter your Ngrok AuthToken when asked. The script will save it and boot the EaglerProxy server.
+6. Connect your Eaglercraft client to the provided proxy URL. Type `/join <SERVER_IP>` in chat to bridge to any server.
