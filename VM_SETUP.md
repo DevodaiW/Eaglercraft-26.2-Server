@@ -1,4 +1,4 @@
-# Eaglercraft Server Setup on your Host (hopefully any Linux distros)
+# Eaglercraft Server Setup on your Host (don't send any Issues about this not working on any old Linux distros or any other OS)
 
 ## Setup Instructions
 
