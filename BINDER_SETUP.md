@@ -1,4 +1,4 @@
-# Eaglercraft Dynamic Relay on MyBinder
+# Eaglercraft Server Setup on MyBinder
 
 ## Setup Instructions
 
