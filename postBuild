@@ -1,0 +1,25 @@
+#!/bin/bash
+set -e
+
+# Clone EaglerProxy repository if not present
+if [ ! -d "proxy-app" ]; then
+  git clone https://github.com/WorldEditAxe/eaglerproxy.git proxy-app
+fi
+
+cd proxy-app
+
+# Install Node dependencies and tsx runtime
+npm install
+npm install tsx --save-dev
+
+# Patch PluginManager and EagProxyAAS metadata for TypeScript entry points
+sed -i 's/!metadata.entry_point.endsWith(".js")/false/g' src/proxy/pluginLoader/PluginManager.ts
+sed -i 's/metadata.entry_point.endsWith(".js")/false/g' src/proxy/pluginLoader/PluginManager.ts
+sed -i 's/"entry_point": "index.js"/"entry_point": "index.ts"/g' src/plugins/EagProxyAAS/metadata.json
+
+# Sync configuration file across all expected module resolution paths
+cd ..
+cp config.ts proxy-app/config.ts
+cp config.ts proxy-app/CONFIG.ts
+cp config.ts proxy-app/src/config.ts
+cp config.ts proxy-app/src/CONFIG.ts
