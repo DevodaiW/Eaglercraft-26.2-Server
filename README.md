@@ -7,5 +7,10 @@
 3. In JupyterLab, open the **Terminal**.
 4. You need to provide your Ngrok AuthToken before starting the server. Run the following command and follow the prompt:
    `bash run_server.sh`
-5. Enter your Ngrok AuthToken when asked. The script will save it and boot the EaglerProxy server.
+5. Enter your Ngrok AuthToken when asked.* The script will save it and boot the EaglerProxy server.
 6. Connect your Eaglercraft client to the provided proxy URL. Type `/join <SERVER_IP>` in chat to bridge to any server.
+
+## *Find your Ngrok Authtoken
+
+1. Go to ngrok.com and sign up.
+2. click "Your Authtoken" on the left sidebar and click the eyelash icon next to bullet point-like characters and highlight it and copy it or press the copy button. You now have your AuthToken in your clipboard.
