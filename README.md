@@ -8,7 +8,7 @@
 4. You need to provide your Ngrok AuthToken before starting the server. Run the following command and follow the prompt:
    `bash run_server.sh`
 5. Enter your Ngrok AuthToken when asked.* The script will save it and boot the EaglerProxy server.
-6. Connect your Eaglercraft client to the provided proxy URL. Type `/join <SERVER_IP>` in chat to bridge to any server.
+6. Connect your Eaglercraft client to the provided proxy URL (change https to wss to make it start with wss:// unless your client automatically changes it). Double click any server or connect to any server in your client and you will spawn in a dummy lobby and type `/join <SERVER_IP>` in chat to join to any server.
 
 ## *Find your Ngrok Authtoken
 
