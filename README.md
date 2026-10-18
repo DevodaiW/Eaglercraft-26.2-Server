@@ -10,10 +10,10 @@ A zero-cost, high-speed EaglerProxy relay running on MyBinder (Google Kubernetes
 ## How to Connect
 
 1. Look at your browser address bar:
-   `https://hub.bids.mybinder.org/user/<workspace-id>/lab`
-2. Copy your workspace ID string (e.g., `devodaiw-eagler-on-mybinder-org-fo92ja17`).
-3. Construct your connection URL using `wss://` and keeping the trailing slash after `8081`:
-   `wss://hub.bids.mybinder.org/user/<workspace-id>/proxy/8081/`
+   `https://<url>/lab`
+2. Copy your workspace ID string (e.g., `hub.gesis.mybinder.org/user/devodaiw-eagler-on-mybinder.org-p8xp4u2v`).
+3. Construct your connection URL using `wss://` and keeping the trailing slash and put a question mark after `8081`:
+   `wss://<url>/proxy/8081/`
 
 ## How to Play
 
