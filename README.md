@@ -4,7 +4,7 @@
 
 1. Click to launch on MyBinder: [`https://mybinder.org/v2/gh/DevodaiW/Eaglercraft-26.2-Server/HEAD`](https://mybinder.org/v2/gh/DevodaiW/Eaglercraft-26.2-Server/HEAD)
 2. Wait for the JupyterLab workspace interface to load.
-3. In JupyterLab, open the **Terminal**.
+3. In JupyterLab, open the **Terminal** (in the .
 4. You need to provide your Ngrok AuthToken before starting the server. Run the following command and follow the prompt:
    `bash run_server.sh`
 5. Enter your Ngrok AuthToken when asked.* The script will save it and boot the EaglerProxy server.
