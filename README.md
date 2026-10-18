@@ -4,7 +4,7 @@ A zero-cost, high-speed EaglerProxy relay running on MyBinder (Google Kubernetes
 
 ## How to Launch
 
-1. Click to launch on MyBinder: [https://mybinder.org/v2/gh/<YOUR_GITHUB_USERNAME>/<YOUR_REPO_NAME>/HEAD](https://mybinder.org/v2/gh/DevodaiW/Eaglercraft-26.3-Server-on-mybinder.org/HEAD)
+1. Click to launch on MyBinder: [https://mybinder.org/v2/gh/DevodaiW/Eaglercraft-26.2-Server-on-mybinder.org/HEAD](https://mybinder.org/v2/gh/DevodaiW/Eaglercraft-26.2-Server-on-mybinder.org/HEAD)
 2. Wait for the JupyterLab workspace interface to load.
 
 ## How to Connect
