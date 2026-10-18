@@ -1,18 +1,41 @@
-#!/bin/bash
-set -e
+const CONFIG = {
+  bindHost: "0.0.0.0",
+  bindPort: 8081,
+  maxConcurrentClients: 200,
+  client: {
+    version: "1.8.8",
+    brand: "EaglerProxy Relay"
+  },
+  server: {
+    host: "127.0.0.1",
+    port: 25565
+  },
+  motd: {
+    l1: "EaglerProxy Dynamic",
+    l2: "Powered by EagPaaS"
+  },
+  skins: {
+    skinUrl: "https://textures.minecraft.net/texture/",
+    cache: {
+      enabled: true,
+      maxAge: 86400000
+    }
+  },
+  adapter: {
+    name: "EagPaaS",
+    version: "1.0",
+    useNatives: true
+  }
+};
 
-# Stop conflicting processes
-pkill -f node || true
-pkill -f tsx || true
-
-# Patch EagPaaS plugin loader for TypeScript entry points
-sed -i 's/!metadata.entry_point.endsWith(".js")/false/g' src/proxy/pluginLoader/PluginManager.ts
-sed -i 's/"entry_point": "index.js"/"entry_point": "index.ts"/g' src/plugins/EagProxyAAS/metadata.json
-
-# Mirror config file across all expected module resolution paths
-cp config.ts CONFIG.ts
-cp config.ts src/config.ts
-cp config.ts src/CONFIG.ts
-
-# Execute EaglerProxy with TSX runtime
-./node_modules/.bin/tsx src/index.ts
+export const bindHost = CONFIG.bindHost;
+export const bindPort = CONFIG.bindPort;
+export const maxConcurrentClients = CONFIG.maxConcurrentClients;
+export const client = CONFIG.client;
+export const server = CONFIG.server;
+export const motd = CONFIG.motd;
+export const skins = CONFIG.skins;
+export const adapter = CONFIG.adapter;
+export const config = CONFIG;
+export const CONFIG = CONFIG;
+export default CONFIG;
